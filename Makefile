@@ -28,7 +28,7 @@ OBJS = \
   $K/sysfile.o \
   $K/kernelvec.o \
   $K/plic.o \
-  $K/virtio_disk.o
+  $K/virtio_disk.o 
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin
@@ -140,6 +140,9 @@ UPROGS=\
 	$U/_bcachetest\
 	$U/_mounttest\
 	$U/_crashtest\
+	$U/_sleep\
+	$U/_pingpong\
+	$U/_primes\
 
 fs.img: mkfs/mkfs README user/xargstest.sh $(UPROGS)
 	mkfs/mkfs fs.img README user/xargstest.sh $(UPROGS)
