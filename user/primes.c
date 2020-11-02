@@ -20,11 +20,11 @@ void divideJudge(int p){
     }
 }
 
-// 开启fd[i]端口
+// 开启pd[i]端口
 void changepd(int k, int pd[])
 {
     close(k); 
-    // 复制fd[i]端口
+    // 复制pd[i]端口
     dup(pd[k]);
     close(pd[0]);
     close(pd[1]);
