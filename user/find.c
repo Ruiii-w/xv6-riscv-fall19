@@ -23,7 +23,7 @@ fmtname(char *path)
 }
 
 void
-ls(char *path)
+find(char *path, char* name)
 {
   char buf[512], *p;
   int fd;
@@ -43,7 +43,7 @@ ls(char *path)
 
   switch(st.type){
   case T_FILE:
-    printf("%s %d %d %l\n", fmtname(path), st.type, st.ino, st.size);
+    // printf("file: %s %d %d %l\n", fmtname(path), st.type, st.ino, st.size);
     break;
 
   case T_DIR:
@@ -58,18 +58,43 @@ ls(char *path)
       if(de.inum == 0)
         continue;
       memmove(p, de.name, DIRSIZ);
+      // printf("de.name is %s",de.name);
+      // printf("de.name.length is %d\n",strlen(de.name));
       p[DIRSIZ] = 0;
       if(stat(buf, &st) < 0){
         printf("ls: cannot stat %s\n", buf);
         continue;
       }
-      printf("%s %d %d %d\n", fmtname(buf), st.type, st.ino, st.size);
+
+//    不要递归进入”.”和”..”
+      if(strlen(de.name) == 1 && de.name[0] == '.')
+        continue;
+      if(strlen(de.name) == 2 && de.name[0] == '.' && de.name[1] == '.')
+        continue;
+      // printf("dir:%s %d %d %d\n", fmtname(buf), st.type, st.ino, st.size);
+      if(strcmp(de.name,name) == 0){
+        // printf("the path is %s\n",buf);
+        // printf("%d\n",strlen(buf));
+        printf("%s\n",buf);
+      }
+      find(buf, name);
     }
     break;
   }
+
+
   close(fd);
 }
+ 
+int
+main(int argc, char *argv[])
+{
+  // int i;
 
-int main(int argc, char* argv[]){
-    
+  if(argc <= 2){
+    printf("error: too few arguments to function 'find\n");
+  }
+
+  find(argv[1],argv[2]);
+  exit();
 }
