@@ -9,7 +9,6 @@ void init(){
     }
 }
 
-// 读出暂存区所有数  被p整除的不再写入暂存区
 void divideJudge(int p){
     int n;
     while (read(0, &n, sizeof(n))) 
@@ -20,7 +19,7 @@ void divideJudge(int p){
     }
 }
 
-// 开启pd[i]端口
+// 开启pd[k]端口
 void changepd(int k, int pd[])
 {
     close(k); 
@@ -56,7 +55,6 @@ void drop(){
         }
     }
 }
-
 
 int main(int argc, char* argv[]){
     int pd[2];

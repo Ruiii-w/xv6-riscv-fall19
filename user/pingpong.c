@@ -16,6 +16,7 @@ int main(int argc, char *argv[]){
     if(fork()!=0){
         
         // parents
+        
         // forkpid= getpid();
         // printf("this pid is %d\n",forkpid);
         write(parent_fd[1],"ping",strlen("ping"));
