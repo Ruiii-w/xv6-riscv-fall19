@@ -79,15 +79,20 @@ cndtPipe(int argc, char* argv[]){
     {
         if(!strcmp(argv[i],"|"))
         {
-            argv[i] = 0;  // 管道标识的位置作为参数结尾， 管道参数的分界
+            argv[i] = 0;  // 管道标识的位置作为 管道参数的分界
             break;
         }
     }
-    
+
+    // for(int i = 0;i<*argc+1;i++)
+    // {
+    //     fprintf(2,"%d.. %s\n", i ,argv[i]);
+    // }t
+
     int p[2];
     pipe(p);
     if(fork() == 0){
-      close(1);
+      close(1); //关闭标准
       dup(p[1]);
       close(p[0]);
       close(p[1]);
@@ -113,13 +118,13 @@ runcmd(int argc, char* argv[]){
     //     fprintf(2,"%d. %s\n", i ,argv[i]);
     // }
 
-    for (int i = 1; i < argc; i++)
-    {
-        if(!strcmp(argv[i],"|"))
-        {
-            cndtPipe(argc,argv);
-        }
-    }
+    // for (int i = 1; i < argc; i++)
+    // {
+    //     if(!strcmp(argv[i],"|"))
+    //     {
+    //         cndtPipe(argc,argv);
+    //     }
+    // }
     
 
     for(int i =1;i<argc;i++)
@@ -128,6 +133,10 @@ runcmd(int argc, char* argv[]){
         // {
         //     cndtPipe(argc,argv);
         // }
+        if(!strcmp(argv[i],"|"))
+        {
+            cndtPipe(argc,argv);
+        }
 
         if(!strcmp(argv[i],">"))
         {//输出重定向
