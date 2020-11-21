@@ -160,6 +160,7 @@ runcmd(int argc, char* argv[]){
 }
 
 
+// main 函数主要参考sh.c中的main
 int
 main(void)
 {
@@ -176,10 +177,13 @@ main(void)
             fprintf(2, "cannot cd %s\n", buf+3);
         continue;
         }
+        
         if(fork() == 0){  
+            // runcmd(parsecmd(buf));
+
             // int argc;
             // char* argv[MAXARGNUM];
-            getargs(buf,&argc,argv);
+            getargs(buf,&argc,argv);    // 读取参数和参数个数
             runcmd(argc,argv);
         }
         wait(0);  //保证一个命令执行完再执行下个命令  fork用子程序执行  父程序等待,结束后再进入下一个循环
