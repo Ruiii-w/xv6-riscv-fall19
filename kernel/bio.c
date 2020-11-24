@@ -94,6 +94,7 @@ bget(uint dev, uint blockno)
         b->blockno = blockno;
         b->valid = 0;
         b->refcnt = 1;
+        /// 双向链表  移动
         b->next->prev = b->prev;
         b->prev->next = b->next; 
         b->next = bcache.headbucket[blocknum].next;
