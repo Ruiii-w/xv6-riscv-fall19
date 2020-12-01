@@ -32,10 +32,11 @@ filealloc(void)
   struct file *f;
 
   acquire(&ftable.lock);
-  f = bd_malloc(sizeof(struct file));
+  f = bd_malloc(sizeof(struct file)); // 使用bd_malloc动态申请文件描述符
 
   if(f->ref == 0)
   {
+    memset(f,0,sizeof(struct file));  // 初始化，对分配的内存清0
     f->ref = 1;
     release(&ftable.lock);
     return f;
