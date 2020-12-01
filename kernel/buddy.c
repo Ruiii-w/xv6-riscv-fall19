@@ -56,23 +56,6 @@ void bit_clear(char *array, int index) {
   array[index/8] = (b & ~m);
 }
 
-// toggle bit at position index in array
-void bit_toggle(char *array,int index){
-  index/=2;
-  char b = array[index/8];
-  char m = (1 << (index % 8));
-  array[index/8] = (b ^ m);
-}
-
-// return 1 if the bit at position index in array is 1
-// which indicates one is free , the other is allocated
-int bit_get(char *array,int index){
-  index/=2;
-  char b = array[index/8];
-  char m = (1 << (index % 8));
-  return (b & m) == m;
-}
-
 // Print a bit vector as a list of ranges of 1 bits
 void
 bd_print_vector(char *vector, int len) {
