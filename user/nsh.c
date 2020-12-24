@@ -92,10 +92,10 @@ cndtPipe(int argc, char* argv[]){
     int p[2];
     pipe(p);
     if(fork() == 0){
-      close(1); //关闭标准
-      dup(p[1]);
-      close(p[0]);
-      close(p[1]);
+      close(1);     // 关闭标准输出
+      dup(p[1]);    // 管道p1端分配文件描述符1
+      close(p[0]);  // 释放原本分配给P[0]的文件描述符
+      close(p[1]);  // 释放原本分配给P[1]的文件描述符
       runcmd(i,argv);
     }
     else{
@@ -117,22 +117,9 @@ runcmd(int argc, char* argv[]){
     // {
     //     fprintf(2,"%d. %s\n", i ,argv[i]);
     // }
-
-    // for (int i = 1; i < argc; i++)
-    // {
-    //     if(!strcmp(argv[i],"|"))
-    //     {
-    //         cndtPipe(argc,argv);
-    //     }
-    // }
     
-
     for(int i =1;i<argc;i++)
     {
-        // if(!strcmp(argv[i],"|"))
-        // {
-        //     cndtPipe(argc,argv);
-        // }
         if(!strcmp(argv[i],"|"))
         {
             cndtPipe(argc,argv);
@@ -160,7 +147,7 @@ runcmd(int argc, char* argv[]){
 }
 
 
-// main 函数主要参考sh.c中的main
+// main
 int
 main(void)
 {
